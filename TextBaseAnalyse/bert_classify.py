@@ -46,7 +46,7 @@ def bert_classify(data_path, mode):
     # ---------------定义基础参数---------------
     bert_name = 'bert-base-chinese'  # 'hfl/chinese-bert-wwm-ext'
     learning_rate = 1e-5
-    batch_size = 128
+    batch_size = 32
     num_epochs = 6
     max_len = 32
     assert mode in ['last', 'last_avg', 'last_4_cls_avg', 'last_4_avg']

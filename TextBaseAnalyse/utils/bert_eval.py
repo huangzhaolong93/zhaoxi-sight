@@ -40,23 +40,24 @@ def eval(config, model, eval_dataloader):
     model.eval()
     correct = torch.zeros(1).squeeze().to(config.device)
     total = torch.zeros(1).squeeze().to(config.device)
-    for i, data in enumerate(tqdm(eval_dataloader)):
-        content, label = data
-        content = list(content)
-        # tokenize the data text
-        inputs = config.tokenizer(content, max_length=config.maxlen, padding='max_length', truncation=True, return_tensors='pt')
+    with torch.no_grad():
+        for i, data in enumerate(tqdm(eval_dataloader)):
+            content, label = data
+            content = list(content)
+            # tokenize the data text
+            inputs = config.tokenizer(content, max_length=config.maxlen, padding='max_length', truncation=True, return_tensors='pt')
 
-        # move data to device
-        input_ids = inputs['input_ids'].to(config.device)
-        token_type_ids = inputs['token_type_ids'].to(config.device)
-        attention_mask = inputs['attention_mask'].to(config.device)
-        labels = label.to(config.device)
+            # move data to device
+            input_ids = inputs['input_ids'].to(config.device)
+            token_type_ids = inputs['token_type_ids'].to(config.device)
+            attention_mask = inputs['attention_mask'].to(config.device)
+            labels = label.to(config.device)
 
-        # forward and backward propagations
-        logits = model(input_ids, attention_mask, token_type_ids)
-        predict = torch.argmax(logits, 1)
+            # forward and backward propagations
+            logits = model(input_ids, attention_mask, token_type_ids)
+            predict = torch.argmax(logits, 1)
 
-        correct += (predict == labels).sum().float()
-        total += len(labels)
+            correct += (predict == labels).sum().float()
+            total += len(labels)
 
     return correct/total
