@@ -34,12 +34,12 @@ Created on 2021/11/24 8:11 下午
 from tqdm import tqdm
 from model.ACAutomaton import ACAutomatonModel
 
-def ac_automaton(filename):
-    knowledge_data = "data/game_knowledge.txt"
-    acam = ACAutomatonModel(knowledge_data)
+def ac_automaton(data_path, tag_path, result_path):
+
+    acam = ACAutomatonModel(tag_path)
     print("-----------build ac automaton------------")
     data = []
-    with open(filename, 'r') as f:
+    with open(data_path, 'r') as f:
         for i, line in enumerate(tqdm(f)):
             data_list = line.strip().split('\t')
             sentence = data_list[0]
@@ -48,8 +48,7 @@ def ac_automaton(filename):
     f.close()
 
     print("-----------write result------------")
-    tag_result = "data/game_tag_result.txt"
-    with open(tag_result, 'w+') as f:
+    with open(result_path, 'w+') as f:
         for sentence, tag in data:
             str = sentence+'\t'+tag+'\n'
             f.write(str)

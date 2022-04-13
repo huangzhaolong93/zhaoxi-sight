@@ -33,8 +33,8 @@ Created on 2021/11/24 11:26 上午
 """
 import math
 #建立字典树的节点
-'''
-如果语料较大，构建一次trie非常的耗时，可以考虑进行存储，后面进行增量构建。
+
+#如果语料较大，构建一次trie非常的耗时，可以考虑进行存储，后面进行增量构建。
 import pickle
 
 def save_model(model, filename):
@@ -46,7 +46,7 @@ def load_model(filename):
     with open(filename, 'rb') as fr:
         model = pickle.load(fr)
     return model
-'''
+
 
 class Node(object):
     """

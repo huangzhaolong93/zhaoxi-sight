@@ -34,25 +34,30 @@ Created on 2021/11/25 5:42 下午
 import torch
 from transformers import AutoTokenizer
 
+
 class Config(object):
-    def __init__(self, bert_name='bert-base-chinese', learning_rate=1e-5, batch_size=16, num_epochs=1,
-                 maxlen=16):
+    def __init__(self, bert_name='bert-base-chinese', learning_rate=1e-5, batch_size=16, num_epochs=1, maxlen=16,
+                 mode='last'):
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        print("device is ：%s" % self.device)
 
         self.bert_name = bert_name
         self.tokenizer = AutoTokenizer.from_pretrained(self.bert_name)
+
         self.learning_rate = learning_rate
         self.batch_size = batch_size
         self.num_epochs = num_epochs
         self.maxlen = maxlen
-        self.mode = "last"
-        self.class_num = 6
 
+        self.mode = mode
+        self.model_dir = "model_dir/" + "bert_" + mode + ".pt"
+
+        self.class_num = 6
         self.label_dict = {
-            "游戏":0,
-            "美食":1,
-            "科技":2,
-            "体育":3,
-            "旅游":4,
-            "汽车":5
+            "游戏": 0,
+            "美食": 1,
+            "科技": 2,
+            "体育": 3,
+            "旅游": 4,
+            "汽车": 5
         }

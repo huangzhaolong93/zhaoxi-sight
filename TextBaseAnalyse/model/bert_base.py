@@ -70,4 +70,3 @@ class UgcClassification(nn.Module):
         logits = self.linear(output)
 
         return logits
-
